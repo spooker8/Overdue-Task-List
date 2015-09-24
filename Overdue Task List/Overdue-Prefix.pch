@@ -16,6 +16,7 @@
 #define TASK_DESCRIPTION @"taskdescription"
 #define TASK_DATE @"taskdate"
 #define TASK_OBJECT_KEY @"taskobjectskey"
+#define TASK_COMPLETION @"taskcompletion"
 
 
 
