@@ -10,7 +10,7 @@
 #import "AddTaskViewController.h"
 
 
-@interface ViewController : UIViewController  <AddTaskViewControllerDelegate>
+@interface ViewController : UIViewController  <AddTaskViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 
 
@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addTaskBarItemPressed;
 
 - (IBAction)reorderBarButtonItempressed:(id)sender;
+//- (IBAction)addTaskBarButtonItempressed:(id)sender;
 
 
 @end

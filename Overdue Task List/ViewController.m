@@ -32,8 +32,44 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+  
+  //  self.tableView.dataSource = self;
+    
+    
+    
+    NSArray *taskAsPropertyList = [[NSUserDefaults standardUserDefaults] arrayForKey:TASK_OBJECT_KEY];
+    
+    for (NSDictionary *dictionary in taskAsPropertyList)
+    {
+        
+        Task *taskObject = [self taskObjectForDictionary:dictionary];
+        
+        [self.taskObjects addObject:taskObject];
+        
+        
+        
+    }
+    
+    
+    
 }
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([segue.destinationViewController isKindOfClass:[AddTaskViewController class]])
+        
+    {
+        
+        AddTaskViewController *addTaskViewController = segue.destinationViewController;
+        
+        addTaskViewController.delegate = self;
+        
+    }
+    
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -43,6 +79,53 @@
 - (IBAction)reorderBarButtonItempressed:(id)sender {
 }
 
+
+- (IBAction)addTaskBarButtonItemPressed:(id)sender {
+    
+    
+    [self performSegueWithIdentifier:@"toAddTaskViewControllerSegue" sender:nil];
+    
+}
+
+
+#pragma mark UITABLEVIEW DATASOURCE
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    return [self.taskObjects count];
+    
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    
+    return 1;
+    
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    //Configure the cell
+    
+    Task *task = self.taskObjects[indexPath.row];
+    cell.textLabel.text = task.title;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *stringFromDate = [formatter stringFromDate:task.date];
+    cell.detailTextLabel.text = stringFromDate;
+    
+    
+    
+    return cell;
+    
+}
 
 
 #pragma mark -AddTaskViewControllerDelegate
@@ -91,6 +174,15 @@
     
 }
 
+
+-(Task *)taskObjectForDictionary: (NSDictionary *)dictionary
+{
+    
+    Task *taskObject = [[Task alloc] initWithData:dictionary];
+    return  taskObject;
+    
+    
+}
 
 
 @end
