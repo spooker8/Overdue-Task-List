@@ -122,6 +122,10 @@
     cell.detailTextLabel.text = stringFromDate;
     
     
+    BOOL isOverdue = [self isDateGreaterThanDate: [NSDate date] and:task.date];
+    
+    if (isOverdue == YES) cell.backgroundColor = [UIColor redColor];
+    else cell.backgroundColor = [UIColor yellowColor];
     
     return cell;
     
@@ -181,6 +185,22 @@
     Task *taskObject = [[Task alloc] initWithData:dictionary];
     return  taskObject;
     
+    
+}
+
+-(BOOL)isDateGreaterThanDate:(NSDate *)date and:(NSDate *)toDate
+{
+    
+    NSTimeInterval dateInterval = [date timeIntervalSince1970];
+    NSTimeInterval toDateInterval = [toDate timeIntervalSince1970];
+    
+    if (dateInterval > toDateInterval)
+    {
+        return YES;
+    }
+    else {
+        return NO;
+    }
     
 }
 
