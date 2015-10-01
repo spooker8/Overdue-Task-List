@@ -17,6 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.textView.delegate = self;
+    self.textField.delegate = self;
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,4 +61,31 @@
     
     
 }
+
+
+#pragma mark UITEXTfield delegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [self.textField resignFirstResponder];
+    return YES;
+    
+}
+
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    
+    if ([text isEqualToString:@"\n"]){
+        
+        [self.textView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
+    
+}
+
+
 @end
